@@ -1,5 +1,3 @@
-#John's Code with real implementation
-
 import numpy as np
 from qiskit.quantum_info import SparsePauliOp
 from itertools import combinations

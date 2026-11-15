@@ -82,7 +82,13 @@ The current quantum example uses five candidate locations and selects exactly tw
 Python 3.10 or newer is recommended. Install the packages used by the quantum implementation with:
 
 ```bash
-python -m pip install numpy scipy qiskit qiskit-aer qiskit-ibm-runtime matplotlib
+python -m pip install -r requirements.txt
+```
+
+Run the simulator with:
+
+```bash
+python quantum_optimization.py
 ```
 
 The classical exhaustive-search version only uses Python's standard library. It should include:
@@ -117,6 +123,8 @@ service = QiskitRuntimeService(channel="ibm_quantum_platform")
 ```
 
 After authentication, the program can select an operational hardware backend and sample the optimized circuit. Hardware results may differ from simulator results because of device noise and calibration conditions.
+
+If `IBM_QUANTUM_TOKEN` is not set, the program runs the simulator normally and skips the hardware step.
 
 ## Notes
 

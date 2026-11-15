@@ -1,6 +1,6 @@
 # Quantum Optimization for Fire Station Placement
 
-Our project explores a weighted **maximum coverage** problem for maximizing the coverage in terms of population by fire stations. Given a set of candidate station locations and a set of neighborhoods weighted by population, the goal is to choose a specific number of fire stations that cover as much of the population as possible.
+Our project explores a weighted **maximum coverage** problem for maximizing the coverage in terms of population by fire stations. Given a set of candidate station locations and a set of weighted neighborhoods by population, the goal is to choose a specific number of fire stations that cover as much of the population as possible.
 
 We utilize a Hamiltonian representation of the cost function to optimize our model.
 

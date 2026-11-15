@@ -1,49 +1,52 @@
 # Quantum Optimization for Fire Station Placement
 
-This project explores a weighted **maximum coverage** problem for fire station placement. Given a set of candidate station locations and neighborhoods, the goal is to choose a limited number of fire stations that cover as much weighted demand as possible.
+Our project explores a weighted **maximum coverage** problem for maximizing the coverage in terms of population by fire stations. Given a set of candidate station locations and a set of neighborhoods weighted by population, the goal is to choose a specific number of fire stations that cover as much of the population as possible.
 
-The quantum formulation uses a Hamiltonian to represent and optimize this discrete problem.
+We utilize a Hamiltonian representation of the cost function to optimize our model.
 
 The project includes two approaches:
 
-- A classical exhaustive search that checks every possible station configuration.
-- A Qiskit-based variational quantum approach that searches only configurations with a fixed number of stations.
+- A classical brute-force search that checks every possible station configuration.
+- A Qiskit-based variational quantum approach that applies quantum properties for optimization.
 
 ## Optimization model
 
 Let:
 
-- `n` be the number of candidate fire station locations.
-- `m` be the number of neighborhoods.
-- `x_i` equal `1` when a station is placed at candidate location `i`, and `0` otherwise.
-- `a_ij` equal `1` when location `i` covers neighborhood `j`, and `0` otherwise.
-- `w_j` be the weight of neighborhood `j`, such as its population or relative priority.
-- `K` be the maximum number of stations that may be selected.
+- $n$ be the number of candidate fire station locations.
+- $m$ be the number of neighborhoods.
+- $x_i = 1$ when a station is placed at candidate location $i$, and $x_i = 0$ otherwise.
+- $a_{ij} = 1$ when location $i$ covers neighborhood $j$, and $a_{ij} = 0$ otherwise.
+- $w_j$ be the weight of neighborhood $j$, such as its population or relative priority.
+- $K$ be the number of stations that can be built.
 
 The weighted coverage objective is:
 
-```text
-maximize  sum_j w_j * (1 - product_i(1 - a_ij * x_i))
-```
+$$
+\max_{\mathbf{x} \in \{0,1\}^{n}}
+\quad
+\sum_{j=1}^{m} w_j
+\left(1 - \prod_{i=1}^{n}\left(1-a_{ij}x_i\right)\right)
+$$
 
 subject to:
 
-```text
-sum_i x_i <= K
-```
+$$
+\sum_{i=1}^{n} x_i \le K
+$$
 
-The expression inside the sum is `1` when at least one selected station covers neighborhood `j`. The implementation minimizes the negative of this value, so a more negative cost represents better coverage.
+The expression inside the sum is $1$ when at least one selected station covers neighborhood $j$. The implementation minimizes the negative of this value, so a more negative cost represents better coverage.
 
 ## Classical exhaustive search
 
-The classical program checks all `2^n` binary station configurations. For each configuration, it calculates the total covered weight and keeps the best solution that uses no more than the allowed number of stations.
+The classical program checks all $2^n$ binary station configurations. For each configuration, it calculates the total covered weight and keeps the best solution that uses no more than the allowed number of stations.
 
 The program asks for four inputs:
 
-1. `n`: number of candidate station locations.
+1. $n$: number of candidate station locations.
 2. `maxFires`: maximum number of stations to build.
-3. `a`: the coverage matrix, with rows separated by `$` and values separated by commas.
-4. `w`: comma-separated neighborhood weights.
+3. $a$: the coverage matrix, with rows separated by `$` and values separated by commas.
+4. $w$: comma-separated neighborhood weights.
 
 For example, the five-location, ten-neighborhood instance used by the quantum implementation can be entered as:
 
@@ -56,10 +59,10 @@ Please enter your w string: 1,2,1,3,1,4,1,2,1,1
 
 The output contains:
 
-- A binary string describing the selected station locations. A `1` means that the corresponding location is selected.
-- The negative weighted coverage score. For example, `-15` means the selected stations cover neighborhoods with a total weight of `15`.
+- A binary string describing the selected station locations. A $1$ means that the corresponding location is selected.
+- The negative weighted coverage score. For example, $-15$ means the selected stations cover neighborhoods with a total weight of $15$.
 
-Because exhaustive search evaluates every binary configuration, its time complexity is `O(2^n * n * m)`. It is useful as an exact baseline for small problem instances but becomes impractical as `n` grows.
+Because exhaustive search evaluates every binary configuration, its time complexity is $O\!\left(2^n n m\right)$. It is useful as an exact baseline for small problem instances but becomes impractical as $n$ grows.
 
 ## Quantum approach
 
@@ -77,7 +80,7 @@ The workflow is:
 6. Measure the optimized circuit and select the most frequent bitstring.
 7. Optionally run the measured circuit on IBM Quantum hardware.
 
-The current quantum example uses five candidate locations and selects exactly two stations. Unlike the classical constraint `sum(x_i) <= K`, the fixed-weight quantum ansatz enforces `sum(x_i) = K`.
+The current quantum example uses five candidate locations and selects exactly two stations. Unlike the classical constraint $\sum_{i=1}^{n}x_i \le K$, the fixed-weight quantum ansatz enforces $\sum_{i=1}^{n}x_i = K$.
 
 ## Installation
 
@@ -130,12 +133,12 @@ If `IBM_QUANTUM_TOKEN` is not set, the program runs the simulator normally and s
 
 ## Notes
 
-- Every row of `a` must contain the same number of entries.
-- The number of rows in `a` must equal `n`.
-- The number of weights in `w` must equal the number of columns in `a`.
-- Coverage values should normally be binary (`0` or `1`).
+- Every row of $a$ must contain the same number of entries.
+- The number of rows in $a$ must equal $n$.
+- The number of weights in $w$ must equal the number of columns in $a$.
+- Coverage values should normally be binary ($0$ or $1$).
 - Neighborhood weights should be non-negative integers or real values.
-- The quantum Hamming weight must be between `0` and `n`.
+- The quantum Hamming weight must be between $0$ and $n$.
 
 ## Future improvements
 

@@ -2,6 +2,8 @@
 
 This project explores a weighted **maximum coverage** problem for fire station placement. Given a set of candidate station locations and neighborhoods, the goal is to choose a limited number of fire stations that cover as much weighted demand as possible.
 
+The quantum formulation uses a Hamiltonian to represent and optimize this discrete problem.
+
 The project includes two approaches:
 
 - A classical exhaustive search that checks every possible station configuration.

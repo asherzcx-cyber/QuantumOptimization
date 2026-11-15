@@ -42,74 +42,23 @@ The expression inside the sum is $1$ when at least one selected station covers n
 We utilized a simple brute-force method as a classical representation of optimization. We intended to use it as a comparison tool as well as a way to assess the accuracy of early models for our quantum circuit.
 
 ## Quantum approach
+ 
+Our primary approach involved transitioning between the cost function and a Hamiltonian. To effectively implement this, we substituted $x_i = \frac{1}{2}(I - Z_i)$ for every $x$. Since the Hamiltonian is a measure of the total energy of our system, the lowest energy would therefore be the most optimal. Just like with our cost function, this is the most negative output.
 
-Our primary approach involved transitioning between the cost function and a Hamiltonian. To effectively implement this, we substituted $x_i = \frac{1}{2}(I - Z_i)$ for every $x$.
-
-## Installation
-
-Python 3.10 or newer is recommended. Install the packages used by the quantum implementation with:
-
-```bash
-python -m pip install -r requirements.txt
-```
-
-Run the simulator with:
-
-```bash
-python quantum_optimization.py
-```
-
-The classical exhaustive-search version only uses Python's standard library. It should include:
-
-```python
-import time
-```
-
-before calling `time.perf_counter()`.
+Using Python, we created a function that converts from our cost equation to the related Hamiltonian $H_C$. We then defined an ansatz using XY gates with parameters $\theta$ to obtain a probability for all possible outcomes. Using a Variational Quantum Eigensolver (VQE), we repeatedly adjusted the parameters to obtain the optimal circuit. As a result, we obtained the values for the parameter $\theta$ that give the optimal solution the greatest probability.
 
 ## Running on IBM Quantum hardware
 
-An IBM Quantum account is required for real-device execution. Never commit an API token to this repository. Store the token in an environment variable instead:
+When running on actual IBM Quantum hardware, we experienced results resembling our simulated outcomes. Although some noise was present, it was nowhere near strong enough to actually skew the results, even in more complex systems (large n and increased weights). As a result, our system is functional on the latest quantum hardware and can be applied successfully.
 
-```bash
-export IBM_QUANTUM_TOKEN="your-token"
-```
+## Scalibility
 
-Then configure Qiskit in Python:
+The primary feature of our system is its scalability. Since n, w, and a are all parameters, we have defined our code such that it will take any set of matching parameters and modify both the Hamiltonian and the ansatz to represent the system accurately. As a result, our model can be easily scaled to higher orders with little difficulty. Users are therefore able to explore multiple configurations while still receiving the optimal output
 
-```python
-import os
-from qiskit_ibm_runtime import QiskitRuntimeService
+## Generalization
 
-QiskitRuntimeService.save_account(
-    channel="ibm_quantum_platform",
-    token=os.environ["IBM_QUANTUM_TOKEN"],
-    overwrite=True,
-    set_as_default=True,
-)
-service = QiskitRuntimeService(channel="ibm_quantum_platform")
-```
+Because our model followed a simple step-by-step process, it can be easily generalized to most binary systems that can be modeled with a discrete cost function. Examples we considered were EEG Electrode Selection, Package Delivery Routing, and Dutch Auctions. Our approach is both easy to use and understand, allowing a convenient approach to optimization that is both effective and efficient.
 
-After authentication, the program can select an operational hardware backend and sample the optimized circuit. Hardware results may differ from simulator results because of device noise and calibration conditions.
-
-If `IBM_QUANTUM_TOKEN` is not set, the program runs the simulator normally and skips the hardware step.
-
-## Notes
-
-- Every row of $a$ must contain the same number of entries.
-- The number of rows in $a$ must equal $n$.
-- The number of weights in $w$ must equal the number of columns in $a$.
-- Coverage values should normally be binary ($0$ or $1$).
-- Neighborhood weights should be non-negative integers or real values.
-- The quantum Hamming weight must be between $0$ and $n$.
-
-## Future improvements
-
-- Add command-line arguments or structured input files instead of interactive strings.
-- Validate malformed matrix and weight inputs.
-- Compare classical and quantum results automatically on the same instance.
-- Add circuit-depth, execution-time, and approximation-quality benchmarks.
-- Test alternative constrained ansatzes that avoid full state preparation.
 
 ## License
 

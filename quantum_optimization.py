@@ -1,6 +1,5 @@
 #John's Code with real implementation
 
-import os
 import numpy as np
 from qiskit.quantum_info import SparsePauliOp
 from itertools import combinations
@@ -159,21 +158,13 @@ print(f"Most frequent bitstring: {max(counts, key=counts.get)}")
 measured_circuit = Fire_Depots
 measured_circuit.measure_all()
 
-token = os.getenv("IBM_QUANTUM_TOKEN")
-if token:
-    QiskitRuntimeService.save_account(
-        channel="ibm_quantum_platform",
-        token=token,
-        overwrite=True,
-        set_as_default=True,
-    )
-    service = QiskitRuntimeService(channel="ibm_quantum_platform")
-    backend = service.least_busy(
-        operational=True,
-        simulator=False,
-        min_num_qubits=127,
-    )
-    counts = run_circuit_and_get_counts(measured_circuit, backend, shots=1000)
-    plot_histogram(counts)
-else:
-    print("IBM_QUANTUM_TOKEN is not set; skipping hardware execution.")
+QiskitRuntimeService.save_account(channel='ibm_quantum_platform', token='APIkey', overwrite=True, set_as_default=True)
+service = QiskitRuntimeService(channel='ibm_quantum_platform')
+
+service = QiskitRuntimeService()
+
+backend = service.least_busy(operational=True, simulator=False, min_num_qubits=127)
+
+counts = run_circuit_and_get_counts(measured_circuit, backend, shots=1000)
+
+plot_histogram(counts)

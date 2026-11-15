@@ -1,6 +1,6 @@
 # Quantum Optimization for Fire Station Placement
 
-Our project explores a weighted **maximum coverage** problem for maximizing the coverage in terms of population by fire stations. Given a set of candidate station locations and a set of weighted neighborhoods by population, the goal is to choose a specific number of fire stations that cover as much of the population as possible.
+Our project utilizes a Hamiltonian-based optimizer to find the maximum population coverage of a set quantity of fire stations within a fixed number of neighborhoods. Given a set of candidate station locations and a set of weighted neighborhoods by population, the goal is to choose a specific placement of fire stations that cover as much of the population as possible.
 
 We utilize a Hamiltonian representation of the cost function to optimize our model.
 
@@ -39,11 +39,11 @@ The expression inside the sum is $1$ when at least one selected station covers n
 
 ## Classical Brute-Force Method
 
-We utilized a simple brute-force method as a classical representation of optimization. We intended to use it as a comparison tool as well as a way to assess the accuracy of early models for our quantum circuit.
+We utilized a simple brute-force method as a classical representation of optimization. We utilized it as a comparison tool as well as a way to assess the accuracy of early models for our quantum circuit.
 
 ## Quantum approach
  
-Our primary approach involved transitioning between the cost function and a Hamiltonian. To effectively implement this, we substituted $x_i = \frac{1}{2}(I - Z_i)$ for every $x$. Since the Hamiltonian is a measure of the total energy of our system, the lowest energy would therefore be the most optimal. Just like with our cost function, this is the most negative output.
+Our primary approach involves transitioning between the cost function and a Hamiltonian. To effectively implement this, we substituted $x_i = \frac{1}{2}(I - Z_i)$ for every $x$. Since the Hamiltonian is a measure of the total energy of our system, the lowest energy would therefore be the most optimal. Just like with our cost function, this is the most negative output.
 
 Using Python, we created a function that converts from our cost equation to the related Hamiltonian $H_C$. We then defined an ansatz using XY gates with parameters $\theta$ to obtain a probability for all possible outcomes. Using a Variational Quantum Eigensolver (VQE), we repeatedly adjusted the parameters to obtain the optimal circuit. As a result, we obtained the values for the parameter $\theta$ that give the optimal solution the greatest probability.
 
@@ -53,7 +53,7 @@ When running on actual IBM Quantum hardware, we experienced results resembling o
 
 ## Scalibility
 
-The primary feature of our system is its scalability. Since n, w, and a are all parameters, we have defined our code such that it will take any set of matching parameters and modify both the Hamiltonian and the ansatz to represent the system accurately. As a result, our model can be easily scaled to higher orders with little difficulty. Users are therefore able to explore multiple configurations while still receiving the optimal output
+The primary feature of our system is its scalability. Since n, w, and a are all parameters, we have defined our code such that it will take any set of matching parameters and modify both the Hamiltonian and the ansatz to represent the system accurately. As a result, our model can be easily scaled to higher orders with little difficulty. Users are therefore able to explore multiple configurations while still receiving the optimal output.
 
 ## Generalization
 
@@ -61,9 +61,4 @@ Because our model followed a simple step-by-step process, it can be easily gener
 
 ## Future Implementations
 
-As of right now, current quantum hardware does not support computing at the scale at which our method outpaces traditional classical computing. However, our process shows that it is indeed possible to build functional models that can be scaled to larger sizes quickly and efficiently for when such computing power is available. Further improvements that can be made to our code would be runtime efficiency and organization, further streamlining our method. We feel that a user-friendly interface would be very beneficial in outlining our process and making it even easier to understand.
-
-
-## License
-
-Add a license file before redistributing or reusing this project.
+As of right now, current quantum hardware does not support computing power at the scale at which our approach can outpace traditional classical computing. However, our process shows that it is indeed possible to build functional models that can be scaled to larger sizes quickly and efficiently for when such computing power is available. Further improvements that can be made to our code would be runtime efficiency and organization, further streamlining our method. We feel that a user-friendly interface would be very beneficial in outlining our process and making it even easier to understand.

@@ -43,21 +43,7 @@ We utilized a simple brute-force method as a classical representation of optimiz
 
 ## Quantum approach
 
-The quantum implementation converts the coverage objective into a diagonal cost Hamiltonian using Qiskit's `SparsePauliOp`.
-
-Its ansatz prepares a probability distribution over only the basis states whose Hamming weight equals the desired number of fire stations. This enforces an exact station count directly in the quantum state. A classical COBYLA optimizer then updates the ansatz parameters to minimize the expected energy.
-
-The workflow is:
-
-1. Build the weighted-coverage cost Hamiltonian.
-2. Generate all basis states with the required Hamming weight.
-3. Prepare a parameterized distribution over those states.
-4. Estimate the Hamiltonian expectation value with Qiskit Aer.
-5. Optimize the parameters with COBYLA.
-6. Measure the optimized circuit and select the most frequent bitstring.
-7. Optionally run the measured circuit on IBM Quantum hardware.
-
-The current quantum example uses five candidate locations and selects exactly two stations. Unlike the classical constraint $\sum_{i=1}^{n}x_i \le K$, the fixed-weight quantum ansatz enforces $\sum_{i=1}^{n}x_i = K$.
+Our primary approach involved transitioning between the cost function and a Hamiltonian. To effectively implement this, we substituted $x_i = \frac{1}{2}(I - Z_i)$ for every $x$.
 
 ## Installation
 

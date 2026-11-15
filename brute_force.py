@@ -1,6 +1,5 @@
 import time
 
-
 n = int(input("Please enter your n value: "))
 maxFires = int(input("Please enter the max fire station num: "))
 a = input("Please enter your a string: ").split("$")

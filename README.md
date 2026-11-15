@@ -1,13 +1,13 @@
 # Quantum Optimization for Fire Station Placement
 
-This project explores a weighted **maximum coverage** problem for fire station placement. Given a set of candidate station locations and neighborhoods, the goal is to choose a limited number of fire stations that cover as much weighted demand as possible.
+Our project explores a weighted **maximum coverage** problem for maximizing the coverage in terms of population by fire stations. Given a set of candidate station locations and a set of weighted neighborhoods by population, the goal is to choose a specific number of fire stations that cover as much of the population as possible.
 
-The quantum formulation uses a Hamiltonian to represent and optimize this discrete problem.
+We utilize a Hamiltonian representation of the cost function to optimize our model
 
 The project includes two approaches:
 
-- A classical exhaustive search that checks every possible station configuration.
-- A Qiskit-based variational quantum approach that searches only configurations with a fixed number of stations.
+- A classical brute-force search that checks every possible station configuration.
+- A Qiskit-based variational quantum approach that applies quantum properties for optimization.
 
 ## Optimization model
 
@@ -18,7 +18,7 @@ Let:
 - `x_i` equal `1` when a station is placed at candidate location `i`, and `0` otherwise.
 - `a_ij` equal `1` when location `i` covers neighborhood `j`, and `0` otherwise.
 - `w_j` be the weight of neighborhood `j`, such as its population or relative priority.
-- `K` be the maximum number of stations that may be selected.
+- `K` be the number of stations that can be built.
 
 The weighted coverage objective is:
 

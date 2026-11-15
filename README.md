@@ -59,6 +59,10 @@ The primary feature of our system is its scalability. Since n, w, and a are all 
 
 Because our model followed a simple step-by-step process, it can be easily generalized to most binary systems that can be modeled with a discrete cost function. Examples we considered were EEG Electrode Selection, Package Delivery Routing, and Dutch Auctions. Our approach is both easy to use and understand, allowing a convenient approach to optimization that is both effective and efficient.
 
+## Future Implementations
+
+As of right now, current quantum hardware does not support computing at the scale at which our method outpaces traditional classical computing. However, our process shows that it is indeed possible to build functional models that can be scaled to larger sizes quickly and efficiently for when such computing power is available. Further improvements that can be made to our code would be runtime efficiency and organization, further streamlining our method. We feel that a user-friendly interface would be very beneficial in outlining our process and making it even easier to understand.
+
 
 ## License
 

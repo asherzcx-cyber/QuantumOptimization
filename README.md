@@ -32,7 +32,7 @@ $$
 subject to:
 
 $$
-\sum_{i=1}^{n} x_i \le K
+\sum_{i=1}^{n} x_i = K
 $$
 
 The expression inside the sum is $1$ when at least one selected station covers neighborhood $j$. The implementation minimizes the negative of this value, so a more negative cost represents better coverage.

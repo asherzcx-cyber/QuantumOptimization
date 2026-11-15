@@ -35,34 +35,11 @@ $$
 \sum_{i=1}^{n} x_i = K
 $$
 
-The expression inside the sum is $1$ when at least one selected station covers neighborhood $j$. The implementation minimizes the negative of this value, so a more negative cost represents better coverage.
+The expression inside the sum is $1$ when at least one selected station covers neighborhood $j$. This implementation minimizes the negative of this value, so a more negative cost represents better coverage.
 
-## Classical exhaustive search
+## Classical Brute-Force Method
 
-The classical program checks all $2^n$ binary station configurations. For each configuration, it calculates the total covered weight and keeps the best solution that uses no more than the allowed number of stations.
-
-The program asks for four inputs:
-
-1. $n$: number of candidate station locations.
-2. `maxFires`: maximum number of stations to build.
-3. $a$: the coverage matrix, with rows separated by `$` and values separated by commas.
-4. $w$: comma-separated neighborhood weights.
-
-For example, the five-location, ten-neighborhood instance used by the quantum implementation can be entered as:
-
-```text
-Please enter your n value: 5
-Please enter the max fire station num: 2
-Please enter your a string: 1,1,1,0,0,0,0,0,0,0$0,0,1,1,1,1,0,0,0,0$0,0,0,0,0,1,1,0,0,0$0,0,0,0,0,0,0,1,1,1$0,1,0,1,0,0,0,0,1,1
-Please enter your w string: 1,2,1,3,1,4,1,2,1,1
-```
-
-The output contains:
-
-- A binary string describing the selected station locations. A $1$ means that the corresponding location is selected.
-- The negative weighted coverage score. For example, $-15$ means the selected stations cover neighborhoods with a total weight of $15$.
-
-Because exhaustive search evaluates every binary configuration, its time complexity is $O\!\left(2^n n m\right)$. It is useful as an exact baseline for small problem instances but becomes impractical as $n$ grows.
+We utilized a simple brute-force method as a classical representation of optimization. We intended to use it as a comparison tool as well as a way to assess the accuracy of early models for our quantum circuit.
 
 ## Quantum approach
 
